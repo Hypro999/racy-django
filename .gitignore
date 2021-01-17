@@ -1,0 +1,6 @@
+# Directories:
+.vscode/
+static/
+
+# Static:
+*.swp
