@@ -11,18 +11,20 @@ import (
 )
 
 func main() {
-	target := flag.String("endpoint", "ugly", "Either ugly, bad, or good.")
+	target := flag.String("target", "atomic_long_delay",
+		"The name of the endpoint to contact, e.g. atomic_long_delay")
 	flag.Parse()
 
 	switch *target {
-	case "ugly":
-		*target = "http://localhost:80/ugly/"
-	case "bad":
-		*target = "http://localhost:80/bad/"
-	case "good":
-		*target = "http://localhost:80/good/"
+	case
+		"atomic_long_delay",
+		"non_atomic_long_delay",
+		"atomic_no_delay",
+		"non_atomic_no_delay",
+		"row_locking_atomic_long_delay":
+		*target = fmt.Sprintf("http://localhost/demo/%s/", *target)
 	default:
-		fmt.Println("Invalid endpoint specified. Choose either ugly, bad, or good.")
+		fmt.Println("Invalid target endpoint.")
 		os.Exit(1)
 	}
 
