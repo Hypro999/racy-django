@@ -13,7 +13,7 @@ import (
 func main() {
 	target := flag.String("target", "atomic_long_delay",
 		"The name of the endpoint to contact, e.g. atomic_long_delay")
-	delay := flag.Int("delay", 1,
+	delay := flag.Int("wait", 1,
 		"Number of seconds to wait in between requests")
 	flag.Parse()
 
@@ -30,7 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 	if *delay < 0 {
-		fmt.Println("The delay must be positive.")
+		fmt.Println("The delay (wait value) must be positive.")
 		os.Exit(1)
 	}
 
