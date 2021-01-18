@@ -4,11 +4,11 @@ from .models import Account, Transaction
 
 
 class TransactionInline(admin.TabularInline):
+    extra = 0
     model = Transaction
 
 
 class AccountAdmin(admin.ModelAdmin):
-    extra = 0
     inlines = [TransactionInline]
 
 
