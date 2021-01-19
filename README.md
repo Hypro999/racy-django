@@ -161,14 +161,16 @@ e.g. `tools\bin\make_requests.exe -target row_locking_atomic_long_delay`
 Increase the number of gunicorn workers. Open up `config/django.env` and change
 the value of the GUNICORN_WORKERS variable. Setting it to 1 will lead to no
 race conditions since these are sync workers. Setting it to a higher value will
-lead to more overwritting if race conditions were possible.  
-e.g. with 3 workers and -wait=0 when using make_requests contacting
+lead to more overwritting changes made to an account's balance if race
+conditions were possible.  
+e.g. with 3 workers and -wait=0 when using make_requests to contact
 atomic_long_delay, you could expect every batch of 3 concurrent requests to
-result in overwriting each other (due to the present race condition).
-Thus only around 10/3 requests would result in actually increasing the balance.
-All transactions would be recorded though, since we're always making a new one
-and not modifying existing ones (the database handles race conditions at this
-level, not us at the web application level).
+result in overwriting each other's changes made to balance (due to the present
+race condition).  
+Thus only around 1/3 of the requests would result in actually increasing the
+balance. All transactions would be still recorded though, since we're always
+making a new one and not modifying existing ones (the database handles race
+conditions at this level, not us at the web application level).  
 Restart the docker containers with `docker-compose restart` for the changes to
 take effect (or just restart the `racy_app_1` container individually).
 
