@@ -45,9 +45,10 @@ func main() {
 
 	var wt sync.WaitGroup
 
+	wt.Add(NUM_REQ)
 	for i := 1; i <= NUM_REQ; i++ {
-		wt.Add(1)
 		go func(i int) {
+			defer wt.Done()
 			resp, err := http.PostForm(*target, params)
 			if err != nil {
 				fmt.Println(err)
@@ -55,7 +56,6 @@ func main() {
 			defer resp.Body.Close()
 
 			fmt.Printf("%d: POST %s %d\n", i, *target, resp.StatusCode)
-			wt.Done()
 		}(i)
 		time.Sleep(time.Second * time.Duration(*delay))
 	}
