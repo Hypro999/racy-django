@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+const (
+	NUM_REQ = 10
+)
+
 func main() {
 	target := flag.String("target", "atomic_long_delay",
 		"The name of the endpoint to contact, e.g. atomic_long_delay")
@@ -41,7 +45,7 @@ func main() {
 
 	var wt sync.WaitGroup
 
-	for i := 1; i <= 10; i++ {
+	for i := 1; i <= NUM_REQ; i++ {
 		wt.Add(1)
 		go func(i int) {
 			resp, err := http.PostForm(*target, params)
